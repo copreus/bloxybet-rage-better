@@ -1,4 +1,6 @@
+
 const fetch = require('node-fetch')
+const crypto = require('crypto');
 
 let auth_key = ""
 
@@ -48,7 +50,7 @@ async function main(){
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': auth_keys[x]
+    'Authorization': auth_key
   },
   body: JSON.stringify({
     'code_name': refer('H6DZ8GSb7ArvGxZG90BjzkOONOtO8TIhe+x3i3l6uplW', 'gusto')
