@@ -5,3 +5,4 @@ Place your auth key between the parentheses like in the example below. For help 
 ```js
   let auth_key = "bloxybettokenhere"
 ```
+also automatically uses code gusto
